@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="logo.png" width="110" alt="Lekao Booster logo">
+  <img src="logo.png" width="110" alt="Lekao Tune logo">
 </p>
 
-<h1 align="center">Lekao System Booster</h1>
+<h1 align="center">Lekao Tune</h1>
 
 <p align="center">
   A safe, reversible Windows performance optimizer with a built-in hardware monitor and in-game FPS overlay.
@@ -14,7 +14,7 @@
 
 ## Overview
 
-Lekao System Booster is a desktop app I built to tune Windows PCs for gaming and everyday use, based on 8+ years of hands-on PC repair and maintenance work.
+Lekao Tune is a desktop app I built to tune Windows PCs for gaming and everyday use, based on 8+ years of hands-on PC repair and maintenance work.
 
 Most "PC booster" tools change dozens of system settings with no way back. The core idea here is **safety first**: before any registry value or service is changed, its **original value is saved**, so a single click on *Revert* returns the PC to exactly how it was.
 
