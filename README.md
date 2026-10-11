@@ -26,13 +26,22 @@ Most "PC booster" tools change dozens of system settings with no way back. The c
 - **Network:** Nagle's algorithm off for lower latency, DNS cache flush
 - **Background noise:** telemetry, Game DVR, Cortana, Widgets, search indexing and notifications can be disabled individually
 
-### Memory & cleanup
-- Frees standby RAM and trims background processes using Windows privileges (`SeProfileSingleProcessPrivilege`) through `ctypes`
-- Cleans temp folders (only items older than 24h), old Windows Update downloads, browser caches and component store (DISM)
-- Native **Disk Cleanup** handlers called via COM, run in a separate worker process with live progress
+### Memory
+- Live RAM, available memory and page-file usage
+- Three cleanup levels: light standby purge (keeps the useful cache), compact background apps using more than 150 MB (never system processes), and DNS + temp files, or all of them at once
+- Uses Windows privileges (`SeProfileSingleProcessPrivilege`) through `ctypes`
+
+### Disk cleanup
+- Scans any drive and shows exactly how much space each item frees before anything is deleted
+- Includes **all of Windows' own Disk Cleanup categories** (Windows Update cleanup, thumbnails, delivery optimization files...), called natively via COM in a separate worker process with live progress
+- Plus extra Lekao items: browser caches (Chrome, Edge, Opera, Brave, Vivaldi, Firefox; tabs are saved first) and GPU shader caches (AMD/NVIDIA/Intel)
+- Each item is tagged by origin (*Windows*, *Lekao* or *Your files*), and personal folders like Downloads come with a clear warning and are never pre-selected
+- Risky operations are deliberately left out: shadow copies (would delete restore points), catroot2, Windows Installer cache and OS compaction
 
 ### Startup manager
-- Lists startup programs from the registry and Task Manager's approval keys, with on/off toggles
+- Lists everything that starts with Windows from the registry Run keys, the Startup folders and Task Manager's approval keys
+- Shows the scope (current user or all users), the full command line and the current state
+- Enable/disable is fully reversible, the same mechanism Task Manager uses
 
 ### Hardware monitor & game overlay
 - Real-time CPU/GPU usage, clocks, temperatures, VRAM and RAM
@@ -44,8 +53,9 @@ Most "PC booster" tools change dozens of system settings with no way back. The c
 ### Safety & recovery
 - Automatic **System Restore point** and registry export before changes
 - Original-state file (`estado_original.json`) with every value the app touched
-- *Revert* tab restores everything, or only selected items
-- Detects and fixes settings from the previous version that caused instability
+- *Revert* tab restores every service, registry value, power plan, hibernation and memory-compression setting to the value it had before
+- **Legacy fix:** detects tweaks from version 1.0 that caused stutter or crashes (GPU WriteCombining, preemption, TDR, boot timer, Time Broker, disabled Spectre/SEHOP protections) and removes them
+- Every run is logged and the log can be exported
 
 ## How it works
 
@@ -74,9 +84,17 @@ Most "PC booster" tools change dozens of system settings with no way back. The c
 |---|---|
 | ![Home](screenshot-home.jpg) | ![Optimization](screenshot-optimization.jpg) |
 
-| Memory | In-game overlay |
+| Memory | Disk cleanup |
 |---|---|
-| ![Memory](screenshot-memory.jpg) | ![Overlay](screenshot-overlay.jpg) |
+| ![Memory](screenshot-memory.jpg) | ![Disk cleanup](screenshot-cleanup.jpg) |
+
+| Startup manager | Revert & legacy fix |
+|---|---|
+| ![Startup](screenshot-startup.jpg) | ![Revert](screenshot-revert.jpg) |
+
+**In-game overlay** (always on top, click-through, toggled with `Ctrl+Shift+F12`):
+
+![Overlay](screenshot-overlay.jpg)
 
 ## Tech stack
 
